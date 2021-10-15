@@ -9,7 +9,9 @@ export default function App() {
   const [userID, setUserID] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
 
-  // При загрузке приложения один раз делается запрос по адресу: https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/users.json и отрисовывается список в компоненте List
+  // При загрузке приложения один раз делается запрос по адресу:
+  // https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/users.json
+  // и отрисовывается список в компоненте List
   useEffect(() => {
     fetch(process.env.REACT_APP_BASE_URL + "users.json")
       .then((response) => response.json())
@@ -17,7 +19,10 @@ export default function App() {
       .catch((e) => setError(e.message));
   }, []);
 
-  // При клике на конкретный элемент списка в компонент Details передаются один props: info (объект с полями id и name) и начинается загрузка данных по адресу: https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/{id}.json, где {id} - это id пользователя из props.
+  // При клике на конкретный элемент списка в компонент Details передаются один props:
+  // (объект с полями id и name) и начинается загрузка данных по адресу:
+  // https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/{id}.json,
+  // где {id} - это id пользователя из props.
   useEffect(() => {
     if (!userID) {
       return;
