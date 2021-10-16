@@ -15,9 +15,14 @@ export default function App() {
   // https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/users.json
   // и отрисовывается список в компоненте List
   useEffect(() => {
+    setLoader(true);
+
     fetch(process.env.REACT_APP_BASE_URL + "users.json")
       .then((response) => response.json())
-      .then((data) => setList((prevState) => [...prevState, ...data]))
+      .then((data) => {
+        setList((prevState) => [...prevState, ...data]);
+        setLoader(false);
+      })
       .catch((e) => setError(e.message));
   }, []);
 
