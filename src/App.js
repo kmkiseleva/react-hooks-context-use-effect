@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import List from "./components/List";
 import Details from "./components/Details";
+import Loader from "./components/Loader";
 
 export default function App() {
   const [list, setList] = useState([]);
   const [error, setError] = useState(false);
   const [userID, setUserID] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [loader, setLoader] = useState(false);
 
   // При загрузке приложения один раз делается запрос по адресу:
   // https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/users.json
@@ -28,9 +30,13 @@ export default function App() {
       return;
     }
 
+    setLoader(true);
     fetch(`${process.env.REACT_APP_BASE_URL}${userID}.json`)
       .then((response) => response.json())
-      .then((data) => setUserInfo(data))
+      .then((data) => {
+        setUserInfo(data);
+        setLoader(false);
+      })
       .catch((e) => setError(e.message));
   }, [userID]);
 
@@ -47,6 +53,7 @@ export default function App() {
           {!error && <List list={list} getUserID={getUserID} />}
         </div>
         <div className="col-4">
+          {loader && <Loader />}
           {userInfo && <Details userInfo={userInfo} />}
         </div>
       </div>
